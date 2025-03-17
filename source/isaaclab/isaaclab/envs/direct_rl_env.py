@@ -579,6 +579,14 @@ class DirectRLEnv(gym.Env):
             self._action_noise_model.reset(env_ids)
         if self.cfg.observation_noise_model:
             self._observation_noise_model.reset(env_ids)
+            
+        self.extras["log"] = dict()
+
+        info = self.reward_tensorboard(env_ids)
+        self.extras["log"].update(info)
+
+        info = self.termination_tensorboard(env_ids)
+        self.extras["log"].update(info)
 
         # reset the episode length buffer
         self.episode_length_buf[env_ids] = 0
@@ -586,7 +594,12 @@ class DirectRLEnv(gym.Env):
     """
     Implementation-specific functions.
     """
-
+    def reward_tensorboard(self, env_ids: Sequence[int]):
+        return {}
+    
+    def termination_tensorboard(self, env_ids: Sequence[int]):
+        return {}
+    
     def _setup_scene(self):
         """Setup the scene for the environment.
 
