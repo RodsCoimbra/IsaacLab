@@ -14,6 +14,34 @@ from isaaclab.utils import configclass
 # Policy configurations #
 #########################
 
+@configclass
+class RslRlDistillationStudentTeacherPointNetCfg:
+    """Configuration for the distillation student-teacher networks."""
+
+    class_name: str = "StudentTeacherPointNet"
+    """The policy class name. Default is StudentTeacherPointNet."""
+
+    init_noise_std: float = MISSING
+    """The initial noise standard deviation for the student policy."""
+
+    encoder_lidar_dims: list[int] = MISSING
+    """The hidden dimensions of the teacher network."""
+    
+    student_hidden_dims: list[int] = MISSING
+    """The hidden dimensions of the student network."""
+
+    proprioception_space_student: int = MISSING
+    """The size of the proprioception space for the student network."""
+    
+    lidar_space_student: int = MISSING
+    """The size of the lidar space for the student network."""
+    
+    proprioception_space_teacher: int = MISSING
+    """The size of the proprioception space for the teacher network."""
+    
+    latent_dim: int = MISSING
+    """The latent dimension resulting from the pointnet network of the teacher."""
+    
 
 @configclass
 class RslRlDistillationStudentTeacherCfg:

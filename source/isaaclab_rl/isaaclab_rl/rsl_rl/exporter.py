@@ -157,7 +157,20 @@ class _OnnxPolicyExporter(torch.nn.Module):
                 dynamic_axes={},
             )
         else:
-            obs = torch.zeros(1, self.actor[0].in_features)
+            # Determine input size based on actor architecture
+            if hasattr(self.actor, 'pointnet'):
+                # PointNet architecture: proprioception + point cloud data
+                # Calculate total input size from the actor's expected input
+                proprioception_size = self.actor.input_size
+                # Estimate point cloud size based on typical usage (e.g., 188 points)
+                # This should match the actual point cloud data size used in training
+                point_cloud_size = 188  #!Hardcoded, as it would require changing the dictionary to store this.
+                total_input_size = proprioception_size + point_cloud_size
+                obs = torch.zeros(1, total_input_size)
+            else:
+                # Standard MLP architecture
+                obs = torch.zeros(1, self.actor[0].in_features)
+            
             torch.onnx.export(
                 self,
                 obs,

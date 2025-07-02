@@ -10,7 +10,7 @@ from typing import Literal
 
 from isaaclab.utils import configclass
 
-from .distillation_cfg import RslRlDistillationAlgorithmCfg, RslRlDistillationStudentTeacherCfg
+from .distillation_cfg import RslRlDistillationAlgorithmCfg, RslRlDistillationStudentTeacherCfg, RslRlDistillationStudentTeacherPointNetCfg
 from .rnd_cfg import RslRlRndCfg
 from .symmetry_cfg import RslRlSymmetryCfg
 
@@ -163,7 +163,7 @@ class RslRlOnPolicyRunnerCfg:
     empirical_normalization: bool = MISSING
     """Whether to use empirical normalization."""
 
-    policy: RslRlPpoActorCriticCfg | RslRlDistillationStudentTeacherCfg = MISSING
+    policy: RslRlPpoActorCriticCfg | RslRlPpoActorCriticPointNetCfg | RslRlDistillationStudentTeacherCfg | RslRlDistillationStudentTeacherPointNetCfg = MISSING
     """The policy configuration."""
 
     algorithm: RslRlPpoAlgorithmCfg | RslRlDistillationAlgorithmCfg = MISSING

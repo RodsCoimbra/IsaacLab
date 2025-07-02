@@ -69,3 +69,7 @@ tests/
 
 # Docker history
 .isaac-lab-docker-history
+
+._git
+source/isaaclab_tasks/isaaclab_tasks/direct/leatherback
+source/isaaclab_tasks/isaaclab_tasks/direct/tiago
