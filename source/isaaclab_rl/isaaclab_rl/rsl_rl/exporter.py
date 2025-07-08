@@ -167,6 +167,17 @@ class _OnnxPolicyExporter(torch.nn.Module):
                 point_cloud_size = 188  #!Hardcoded, as it would require changing the dictionary to store this.
                 total_input_size = proprioception_size + point_cloud_size
                 obs = torch.zeros(1, total_input_size)
+                
+            elif hasattr(self.actor, 'lidar_encoder'):
+                # PointNet architecture: proprioception + point cloud data
+                # Calculate total input size from the actor's expected input
+                proprioception_size = self.actor.input_size
+                lidar_encoder_size = self.actor.lidar_encoder[0].in_features
+                # Estimate point cloud size based on typical usage (e.g., 188 points)
+                # This should match the actual point cloud data size used in training
+                total_input_size = proprioception_size + lidar_encoder_size
+                obs = torch.zeros(1, total_input_size)
+                
             else:
                 # Standard MLP architecture
                 obs = torch.zeros(1, self.actor[0].in_features)
