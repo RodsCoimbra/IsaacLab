@@ -108,6 +108,14 @@ def zip_files(root_dir, zip_filename):
                 filepath = os.path.join(root_dir, filename)
                 if os.path.isfile(filepath):
                     zipf.write(filepath, filename)
+        # Check for 'agents' subfolder and add its .py files
+        agents_dir = os.path.join(root_dir, "agents")
+        if os.path.isdir(agents_dir):
+            for agent_file in os.listdir(agents_dir):
+                if agent_file.endswith('.py') and not agent_file.startswith('__init__'):
+                    agent_filepath = os.path.join(agents_dir, agent_file)
+                    if os.path.isfile(agent_filepath):
+                        zipf.write(agent_filepath, os.path.join("agents", agent_file))
     print(f"Zipped all .py files in {root_dir} into {zip_filename}")
 
 @hydra_task_config(args_cli.task, "rsl_rl_cfg_entry_point")
